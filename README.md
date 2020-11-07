@@ -1,16 +1,4 @@
-<!--
-*** Thanks for checking out this README Template. If you have a suggestion that would
-*** make this better, please fork the repo and create a pull request or simply open
-*** an issue with the tag "enhancement".
-*** Thanks again! Now go create something AMAZING! :D
--->
 
-
-
-
-
-<!-- PROJECT SHIELDS -->
-<!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
 * [Maven on zOS](#about-the-project)
@@ -18,11 +6,10 @@
 * [Settings](#settings)
 
 
-<!-- ABOUT THE PROJECT -->
 ## Maven on zOS
 
 
-Yes, you can use Maven on zOS under USS, reason being maven at end of the day is Java application and require JRE which is available on USS for most installation. This took me a full week to figure it out but
+Yes, you can use Maven on zOS under USS, reason being maven at end of the day is Java application and require JRE which is available on USS for most installation. This took me a full week to figure it out but it worked eventually. 
 
 ### Prerequisites
 
