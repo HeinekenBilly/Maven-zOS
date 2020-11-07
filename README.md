@@ -10,97 +10,60 @@
 
 
 <!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Best-README-Template</h3>
- 
-</p>
-
-
-
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
 * [Maven on zOS](#about-the-project)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-* [Usage](#usage)
-
-
+* [Prerequisites](#prerequisites)
+* [Settings](#settings)
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should element DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue.
-
-A list of commonly used resources that I find helpful are listed in the acknowledgements.
-
-### Built With
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
+## Maven on zOS
 
 
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Yes, you can use Maven on zOS under USS, reason being maven at end of the day is Java application and require JRE which is available on USS for most installation. This took me a full week to figure it out but
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+1. Access to OMVS shell. 
+
+2. You will need Maven binaries in zipped format and can be downloaded from [here](https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip)
+
+3. Unzip the binaries to any location on your workstation and then transfer using IBM Idz or any other method available to your home direcorty of USS or any other location of your choice. 
+
+4. If you have cURL for zOS which comes packaged with Rocket Git, you can directly download on to USS. 
+
+### Settings
+
+1. CD to your direcory where you kept the files on USS and run the following command
+```sh 
+chtag -tc ibm-1047 ~/apache-maven-3.6.3/bin/m2.conf 
+```
+2. Now make a copy of this file, just in case. 
 ```sh
-npm install npm@latest -g
+cp ~/apache-maven-3.6.3/bin/m2.conf ~/apache-maven-3.6.3/bin/m2.conf.bkp
+```
+3. Rename the m2.conf to m2.conf.old
+```sh
+mv m2.conf m2.conf.old
+```
+4. Now using iconv to change the encoding of m2.conf to UTF-8
+```sh
+iconv -f ibm-1047 -t UTF-8 ~/apache-maven-3.6.3/bin/m2.conf.old > ~/apache-maven-3.6.3/bin/m2.conf
+```
+5. set MAVEN_OPTS to use UTF-8 encoding, remember that is zOS so default encoding is Ebcidc.
+```sh
+export MAVEN_OPTS=-Dfile.encoding=UTF-8
+```
+6. Set execute permission on ~/apache-maven-3.6.3/bin.mvn
+```sh
+chmod +x ~/apache-maven-3.6.3/bin/mvn
+```
+7. Test Drive should show version instead of hieroglyph. 
+```sh
+mvn -v
 ```
 
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-```sh
-git clone https://github.com/your_username_/Project-Name.git
-```
-3. Install NPM packages
-```sh
-npm install
-```
-4. Enter your API in `config.js`
-```JS
-const API_KEY = 'ENTER YOUR API';
-```
+With Love,
+Billy 'The Cat'
